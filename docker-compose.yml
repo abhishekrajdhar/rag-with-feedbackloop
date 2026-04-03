@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: rag_app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+    depends_on:
+      - mlflow
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.20.2
+    container_name: rag_mlflow
+    command: >
+      mlflow ui
+      --backend-store-uri /mlflow/mlruns
+      --host 0.0.0.0
+      --port 5000
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlflow/mlruns
