@@ -15,6 +15,7 @@ Production-ready Retrieval-Augmented Generation system built with FastAPI, LangC
 - Inject corrective user feedback back into retrieval as high-priority memory
 - Track each query run in MLflow experiment `rag_production`
 - Bonus streaming endpoint with SSE at `POST /query/stream`
+- Streamlit frontend for ingestion, querying, feedback, and tracking
 
 ## Project Structure
 
@@ -45,6 +46,7 @@ Production-ready Retrieval-Augmented Generation system built with FastAPI, LangC
 │   └── service.py
 ├── tracking/
 │   └── service.py
+├── streamlit_app.py
 ├── data/
 │   └── uploads/
 ├── .env.example
@@ -105,6 +107,12 @@ mlflow ui --backend-store-uri ./mlruns --host 0.0.0.0 --port 5000
 
 If you prefer a tracked server URI, update `MLFLOW_TRACKING_URI` in `.env` to `http://127.0.0.1:5000`.
 
+### 6. Run the Streamlit frontend
+
+```bash
+streamlit run streamlit_app.py
+```
+
 ## API Usage
 
 ### Ingest documents
@@ -155,6 +163,23 @@ curl -X POST "http://127.0.0.1:8000/feedback" \
 
 ```bash
 curl "http://127.0.0.1:8000/mlflow/summary"
+```
+
+## Streamlit UI
+
+The Streamlit app provides:
+
+- Multi-file upload for `.pdf`, `.txt`, and `.md`
+- Standard and streaming query modes
+- Source and score inspection
+- Inline feedback submission with optional correction
+- MLflow experiment summary view
+
+The frontend reads these optional `.env` values:
+
+```bash
+STREAMLIT_API_BASE_URL=http://127.0.0.1:8000
+MLFLOW_UI_URL=http://127.0.0.1:5000
 ```
 
 ## Docker
