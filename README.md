@@ -61,7 +61,7 @@ Production-ready Retrieval-Augmented Generation system built with FastAPI, LangC
 ### 1. Create and activate a virtual environment
 
 ```bash
-python3.10 -m venv .venv
+python3.11.14 -m venv .venv
 source .venv/bin/activate
 ```
 
